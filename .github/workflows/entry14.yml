@@ -1,0 +1,30 @@
+name: test
+
+on: [workflow_dispatch]
+
+jobs:
+  clone-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout current repository
+      uses: actions/checkout@v4
+
+    - name: Clone target repository
+      run: git clone https://github.com/QmUeRVSrwWapPSH/L7Http2.git ./target-repo
+
+    - name: goset
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.24'
+        cache: true
+
+    - name: goset
+      run: |
+        cd ./target-repo
+        go mod download
+
+    - name: Run Go application
+      run: |
+        cd ./target-repo
+        go run main.go https://chatgpt.com/ 10000 500
